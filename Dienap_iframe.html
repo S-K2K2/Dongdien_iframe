@@ -18,6 +18,9 @@
         <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
         <script src="https://www.unpkg.com/@eohjsc/era-widget@1.0.14/src/index.js"></script>
+        <figure class="highcharts-figure">
+            <button id="exportButton">Export to Excel</button>
+        </figure>
 <div id="container"></div>
 <input type="checkbox" id="Dong dien"></input>
 <script>
@@ -106,6 +109,17 @@ Highcharts.stockChart('container', {
     }]
 });
 
+        document.getElementById('exportButton').addEventListener('click', function () {
+        const ws = XLSX.utils.json_to_sheet(dataBuffer.map(point => ({
+        Time: (new Date(point[0])).toLocaleString(),
+        Dongdien: point[1]
+        })));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Dong dien');
+        XLSX.writeFile(wb, 'Dong dien_data.xlsx');
+        });
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     </body>
 </html>
