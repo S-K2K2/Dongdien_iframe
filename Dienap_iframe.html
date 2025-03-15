@@ -55,6 +55,7 @@ Highcharts.stockChart('container', {
                     const x = (new Date()).getTime(), // current time
                         y = sensor2Value;
                     series.addPoint([x, y], true, true);
+                    dataBuffer.push([x, y]);
                 }, 1000);
             }
         }
@@ -94,7 +95,7 @@ Highcharts.stockChart('container', {
     },
 
     series: [{
-        name: 'Dong dien',
+        name: 'Dongdien',
         data: (function () {
             // generate an array of random data
             const data = [],
@@ -117,7 +118,7 @@ Highcharts.stockChart('container', {
         Dongdien: point[1]
         })));
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Dong dien');
+        XLSX.utils.book_append_sheet(wb, ws, 'Dongdien');
         XLSX.writeFile(wb, 'Dong dien_data.xlsx');
         });
 
