@@ -4,6 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Live Sensor1 Data Chart</title>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://www.unpkg.com/@eohjsc/era-widget@1.0.14/src/index.js"></script>
         <style>
             #container {
     height: 400px;
@@ -13,15 +18,12 @@
         </style>
     </head>
     <body>
-        <script src="https://code.highcharts.com/stock/highstock.js"></script>
-        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-        <script src="https://www.unpkg.com/@eohjsc/era-widget@1.0.14/src/index.js"></script>
+        
         <figure class="highcharts-figure">
+            <div id="container"></div>
             <button id="exportButton">Export to Excel</button>
         </figure>
-<div id="container"></div>
+
 <input type="checkbox" id="Dong dien"></input>
 <script>
      // Era Widget initialization
