@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Live Sensor1 Data Chart</title>
+        <style>
+            #container {
+    height: 400px;
+    min-width: 310px;
+}
+
+        </style>
+    </head>
+    <body>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://www.unpkg.com/@eohjsc/era-widget@1.0.14/src/index.js"></script>
+<div id="container"></div>
+<input type="checkbox" id="Dong dien"></input>
+<script>
+     // Era Widget initialization
+     const eraWidget = new EraWidget();
+        let config = null;
+        let sensor2Value = 0; // Khởi tạo giá trị giá trị mặc định
+        const dataBuffer = [];
+
+        eraWidget.onConfiguration((configuration) => {
+            config = configuration.realtime_configs[0];
+        });
+
+        eraWidget.onValues((values) => {
+            const input = document.getElementById('Dong dien');
+            sensor2Value = values[config.id].value; // Giả sử values[config.id].value là giá trị thực tế
+            input.checked = values[config.id].value > 0; // Đặt trạng thái của checkbox dựa trên giá trị
+        });
+
+        eraWidget.ready();
+        // Create the chart
+Highcharts.stockChart('container', {
+    chart: {
+        events: {
+            load: function () {
+
+                // set up the updating of the chart each second
+                const series = this.series[0];
+                setInterval(function () {
+                    const x = (new Date()).getTime(), // current time
+                        y = sensor2Value;
+                    series.addPoint([x, y], true, true);
+                }, 1000);
+            }
+        }
+    },
+
+    accessibility: {
+        enabled: false
+    },
+
+    time: {
+        useUTC: false
+    },
+
+    rangeSelector: {
+        buttons: [{
+            count: 1,
+            type: 'minute',
+            text: '1M'
+        }, {
+            count: 5,
+            type: 'minute',
+            text: '5M'
+        }, {
+            type: 'all',
+            text: 'All'
+        }],
+        inputEnabled: false,
+        selected: 0
+    },
+
+    title: {
+        text: 'DÒNG ĐIỆN'
+    },
+
+    exporting: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Dong dien',
+        data: (function () {
+            // generate an array of random data
+            const data = [],
+                time = (new Date()).getTime();
+
+            for (let i = -999; i <= 0; i += 1) {
+                data.push([
+                    time + i * 1000,
+                    sensor2Value
+                ]);
+            }
+            return data;
+        }())
+    }]
+});
+
+</script>
+    </body>
+</html>
